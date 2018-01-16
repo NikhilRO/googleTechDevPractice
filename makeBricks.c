@@ -9,7 +9,7 @@ int makeBricks(int small, int big, int goal){
     if(small == 0 && big == 0) return 0;
     if(small == 0) return makeBricks(small, big-1, goal-5);
     if(big == 0) return makeBricks(small-1, big, goal-1);
-    return makeBricks(small-1,big,goal-1) ? 1 : (makeBricks(small,big-1, goal-5) ? 1 : 0);
+    return  makeBricks(small-1,big,goal-1) ? 1 : (makeBricks(small,big-1, goal-5) ? 1 : 0);
 }
 
 int main(void){
