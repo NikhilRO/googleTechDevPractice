@@ -8,6 +8,7 @@ The input 3[abc]4[ab]c would be output as abcabcabcababababc
 #include <string.h>
 #include <stdlib.h>
 
+// Allows to get a string of unknown size from the user
 char * getString(){
     int size = 10;
     char * m = malloc(size*sizeof(char));
@@ -26,13 +27,12 @@ char * getString(){
 }
 
 char * insertString(char * a, int n1, char * s, int n2){
-
+    
 
     return a;
 }
 
-char * decompression (char * a, int len){
-    char * outstr;
+char * decompression (char * a, int len, int repeat){
     int outlen = 0, number = 0, tempstr = 0; //length of output string
     for(int j = 0; j < len; j++){
         if(*(i+j) <= '9' && *(i+j) >= '0'){
@@ -46,7 +46,7 @@ char * decompression (char * a, int len){
 
         }
     }
-    return outstr;
+    return a;
 }
 
 
