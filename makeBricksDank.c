@@ -6,23 +6,34 @@ Except, now you have n bricks.
 
 #include <stdio.h>
 
+// s= source, t = target
+int * duplicateArray(int * s, n){
+    int *t = malloc(n*sizeof(int));
+    while(n--) *(t+n) = *(s+n);
+    return t;
+}
+
 // bn = # of each brick, bs = size of bricks, n= number of different types of brick = array length of bs and bn
 int makeBricks(int *bn, int *bs, int n, int goal){
     if(goal == 0) return 1;
+
     for(int i=0; i < n; i++){
-        if(bs[i] == 0) return makeBricks(bs, bn, n, goal);
+        int * d = duplicateArray(bn);
+        if(d[i] != 0){
+            d[i]--;
+            return makeBricks(bs, d, n, goal - bs[i]);
+        }
+        free(d);
     }
-    if(small == 0 && big == 0) return 0;
-    if(small == 0) return makeBricks(small, big-1, goal-5);
-    if(big == 0) return makeBricks(small-1, big, goal-1);
-    return  makeBricks(small-1,big,goal-1) ? 1 : (makeBricks(small,big-1, goal-5) ? 1 : 0);
+    free(bn);
+    return 0;
 }
 
 int main(void){
-    int bn[] = {};
-    int bs[] = {};
-    int n = ;
-    int goal = ;
-    printf("%d\n", makeBricks(bn, bs, n, goal));
+    int bn[] = {2, 1, 1};
+    int bs[] = {1, 2, 5};
+    int n = 3;
+    int goal = 8;
+    printf("%d\n", makeBricks(duplicateArray(bn), bs, n, goal));
     return 0;
 }
