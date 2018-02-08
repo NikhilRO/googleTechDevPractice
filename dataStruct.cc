@@ -7,6 +7,7 @@
 #include <queue> 
 #include <fstream>
 #include <string>
+#include <list>
 
 using namespace std;
 
@@ -70,8 +71,8 @@ queue<string>  tokenizeToQueue(string filename){
 }
 
 /* Deque Functions
-d.push_back();
-d.push_front();
+d.push_back(val);
+d.push_front(val);
 d.pop_back();
 d.push_front();
 d.insert(pos, val);
@@ -91,6 +92,36 @@ deque<string> tokenizeToDeque(string filename){
     string s;
     deque<string> tokens;
     while (file >> s) tokens.push_back(s);
+    file.close();
+    return tokens;
+}
+
+/* List functions 
+l.push_back(val);
+l.pop_back();
+l.push_front(val);
+l.pop_front();
+l.insert(pos, val);
+l.erase(pos);
+l.clear();
+l.splice(pos,theSecondList);    - result is a combined list with second beginning at pos of l
+l.remove(val);                  - O(n) but it needs to be sorted
+l.unique();                     - O(n)
+l.merge(theSecondList);         - second list becomes empty; complexity is O(n); useful in merge sort;
+l.sort();                       - O(nlogn) 
+l.reverse();                    - O(n)
+l.front();                      - Gets value
+l.back();
+l.begin();                      - Gets iterator: NOTE Iterators can be used to traverse the list by ++i or i++
+l.end();
+l.empty();
+*/
+list<string> tokenizeToList(string filename){
+    ifstream file;
+    file.open(filename);
+    string s;
+    list<string> tokens;
+    while(file >> s) tokens.push_back(s);
     file.close();
     return tokens;
 }
@@ -141,9 +172,25 @@ void printDeque(deque<auto> &d){ //Prints forward
 void printDeque2(deque<auto> &d){ //Prints reverse
     while(!d.empty()){
         cout << d.back() << endl;
-        d.push_back();
+        d.pop_back();
     }
     cout << endl;
+    return;
+}
+
+void printList(list<auto> &l){ //Prints forward
+    while(!l.empty()){
+        cout << l.front() << endl;
+        l.pop_front();
+    }
+    return;
+}
+
+void printList2(list<auto> &l){
+    while(!l.empty()){
+        cout << l.back() << endl;
+        l.pop_back();
+    }
     return;
 }
 
@@ -169,6 +216,10 @@ int main(int argc, char ** argv){
     deque<string> d;
     d = tokenizeToDeque(filename);
     printDeque(d);
+
+    list<string> l;
+    l = tokenizeToList(filename);
+    printList(l);
 
     return 0;
 }
