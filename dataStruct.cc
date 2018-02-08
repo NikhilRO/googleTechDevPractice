@@ -129,7 +129,7 @@ list<string> tokenizeToList(string filename){
 
 /* Unordered Map Functions
 um.insert( {{key, val}, {key, val}} );   - To insert many keys
-u["key"] = val;                         - It can add a new key if it doesn't exist or it will reassign the value at key.
+um["key"] = val;                         - It can add a new key if it doesn't exist or it will reassign the value at key.
 um.size();
 um.erase(iterator or key);                     
 um.begin();                              - Iterator to the beginning
@@ -137,6 +137,7 @@ um.end();                                - Iterator to the end
 um.empty();
 um.count(key);                           - Returns the count for a key
 um.find(key);                            - Returns the pointer/iterator for a key
+um.clear();
 */
 unordered_map<string, int> tokenizeToMap(string filename){
     ifstream file;
@@ -149,8 +150,25 @@ unordered_map<string, int> tokenizeToMap(string filename){
 }
 
 /* Unordered Set Functions
-
+us.empty();
+us.size();
+us.begin();
+us.find(key);                           -  Returns an iterator./pointer for the key
+us.count(key);                          -  Returns 0 or 1
+us = {"" , " "};                       
+us.insert({key});
+us.erase(key);
+us.clear();
 */
+unordered_set<string> tokenizeToSet(string filename){
+    ifstream file;
+    file.open(filename);
+    string s;
+    unordered_set<string> tokens;
+    while(file >> s) tokens.insert({s});
+    file.close();
+    return tokens;
+}
 
 void printVector(vector<auto> &v){ // Prints forward
     for (int i = 0; i < v.size(); i++) cout << v[i] << endl;
@@ -213,7 +231,7 @@ void printList(list<auto> &l){ //Prints forward
     return;
 }
 
-void printList2(list<auto> &l){
+void printList2(list<auto> &l){ //Prints Reverse
     while(!l.empty()){
         cout << l.back() << endl;
         l.pop_back();
@@ -226,6 +244,15 @@ void printMap(unordered_map<auto, int> &um){
     while(!um.empty()){
         cout << um.begin()->first << " : " << um.begin()->second << endl;
         um.erase(um.begin());
+    }
+    cout << endl;
+    return;
+}
+
+void printSet(unordered_set<auto> &us){
+    while(!us.empty()){
+        cout << *us.begin() << " : " << us.count(*us.begin()) << endl;
+        us.erase(us.begin());
     }
     cout << endl;
     return;
@@ -258,9 +285,14 @@ int main(int argc, char ** argv){
     l = tokenizeToList(filename);
     printList(l);
 
-    unordered_map<string, int> u;
-    u = tokenizeToMap(filename);
-    printMap(u);
+    unordered_map<string, int> um;
+    um = tokenizeToMap(filename);
+    printMap(um);
+
+    unordered_set<string> us;
+    us = tokenizeToSet(filename);
+    printSet(us);
+
 
     return 0;
 }
