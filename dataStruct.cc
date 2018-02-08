@@ -115,6 +115,7 @@ l.back();
 l.begin();                      - Gets iterator: NOTE Iterators can be used to traverse the list by ++i or i++
 l.end();
 l.empty();
+l.size();
 */
 list<string> tokenizeToList(string filename){
     ifstream file;
@@ -125,6 +126,31 @@ list<string> tokenizeToList(string filename){
     file.close();
     return tokens;
 }
+
+/* Unordered Map Functions
+um.insert( {{key, val}, {key, val}} );   - To insert many keys
+u["key"] = val;                         - It can add a new key if it doesn't exist or it will reassign the value at key.
+um.size();
+um.erase(iterator or key);                     
+um.begin();                              - Iterator to the beginning
+um.end();                                - Iterator to the end
+um.empty();
+um.count(key);                           - Returns the count for a key
+um.find(key);                            - Returns the pointer/iterator for a key
+*/
+unordered_map<string, int> tokenizeToMap(string filename){
+    ifstream file;
+    file.open(filename);
+    string s;
+    unordered_map<string, int> tokens;
+    while(file >> s) tokens[s]++;
+    file.close();
+    return tokens;
+}
+
+/* Unordered Set Functions
+
+*/
 
 void printVector(vector<auto> &v){ // Prints forward
     for (int i = 0; i < v.size(); i++) cout << v[i] << endl;
@@ -183,6 +209,7 @@ void printList(list<auto> &l){ //Prints forward
         cout << l.front() << endl;
         l.pop_front();
     }
+    cout << endl;
     return;
 }
 
@@ -191,6 +218,16 @@ void printList2(list<auto> &l){
         cout << l.back() << endl;
         l.pop_back();
     }
+    cout << endl;
+    return;
+}
+
+void printMap(unordered_map<auto, int> &um){
+    while(!um.empty()){
+        cout << um.begin()->first << " : " << um.begin()->second << endl;
+        um.erase(um.begin());
+    }
+    cout << endl;
     return;
 }
 
@@ -220,6 +257,10 @@ int main(int argc, char ** argv){
     list<string> l;
     l = tokenizeToList(filename);
     printList(l);
+
+    unordered_map<string, int> u;
+    u = tokenizeToMap(filename);
+    printMap(u);
 
     return 0;
 }
