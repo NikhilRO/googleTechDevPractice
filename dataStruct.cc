@@ -241,6 +241,7 @@ void printList2(list<auto> &l){ //Prints Reverse
 }
 
 void printMap(unordered_map<auto, int> &um){
+    cout << um.size() << endl;
     while(!um.empty()){
         cout << um.begin()->first << " : " << um.begin()->second << endl;
         um.erase(um.begin());
@@ -250,6 +251,7 @@ void printMap(unordered_map<auto, int> &um){
 }
 
 void printSet(unordered_set<auto> &us){
+    cout << us.size() << endl;
     while(!us.empty()){
         cout << *us.begin() << " : " << us.count(*us.begin()) << endl;
         us.erase(us.begin());
