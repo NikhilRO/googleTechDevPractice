@@ -11,18 +11,22 @@ using namespace std; //only used for convenience here
 
 /*
 [Y] Random colour 
-[Y] Empty tags / Self-closing tags in HTML 5 
+[Y] Empty tags / Self-closing tags in HTML 5
 */
 
 unordered_set<string> emptyTags = {"area", "base", "br", "col", "embed", "hr", "img", "input", "keygen", "link", "meta", "param", "source", "track", "wbr"};
 
-bool isEmptyTag(const string &text, int pos){
+bool isEmptyTag(const string &text, string tag){
+    return emptyTags.count(tag);
+}
+
+string whatTag(const string &text, int pos){
     string tag;
     while(text[pos] != '>'){
         tag += text[pos];
         pos++;
     }
-    return emptyTags.count(tag);
+    return tag;
 }
 
 int randomFFFFFF(){
@@ -69,12 +73,20 @@ void appendColors(string& text){
                 sameCommand = false;
             } else {
                 string random = randomColor();
-                if(!isEmptyTag(text, i+1)){
-                    sameCommand = true;
-                    colors.push(random);
-                }
                 text.insert(i, random);
                 i += random.length() + 1;
+                string tag = whatTag(text, i);
+                i += tag.length();
+                if(!isEmptyTag(text, tag)){
+                    sameCommand = true;
+                    colors.push(random);
+                } else {
+                    if(sameCommand){
+                        i++;
+                        text.insert(i, colors.top());
+                        i += colors.top().length() + 1;
+                    }
+                }
             }
         }
     }
@@ -95,6 +107,7 @@ int main(int argc, char **argv){
     string text = fileToString(file, filename);
     cout << text << endl; 
     appendColors(text);
+    cout << text << endl; 
     outputString(text, filename);
     return 0;
 }
